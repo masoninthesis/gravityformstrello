@@ -1,17 +1,17 @@
 <?php
-	
-/*
+/**
 Plugin Name: Gravity Forms Trello Add-On
-Plugin URI: http://www.gravityforms.com
+Plugin URI: https://www.gravityforms.com
 Description: Integrates Gravity Forms with Trello
-Version: 1.0.2
+Version: 1.2.2
 Author: rocketgenius
-Author URI: http://www.rocketgenius.com
+Author URI: https://www.rocketgenius.com
+License: GPL-2.0+
 Text Domain: gravityformstrello
 Domain Path: /languages
 
 ------------------------------------------------------------------------
-Copyright 2009-2016 Rocketgenius, Inc.
+Copyright 2009-2017 Rocketgenius, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,26 +28,45 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
-define( 'GF_TRELLO_VERSION', '1.0.2' );
+define( 'GF_TRELLO_VERSION', '1.2.2' );
 
+// If Gravity Forms is loaded, bootstrap the Trello Add-On.
 add_action( 'gform_loaded', array( 'GF_Trello_Bootstrap', 'load' ), 5 );
 
+/**
+ * Class GF_Trello_Bootstrap
+ *
+ * Handles the loading of the Trello Add-On and registers with the Add-On Framework.
+ */
 class GF_Trello_Bootstrap {
 
+	/**
+	 * If the Feed Add-On Framework exists, Trello Add-On is loaded.
+	 *
+	 * @access public
+	 * @static
+	 */
 	public static function load() {
-		
+
 		if ( ! method_exists( 'GFForms', 'include_feed_addon_framework' ) ) {
 			return;
 		}
-		
+
 		require_once( 'class-gf-trello.php' );
-		
+
 		GFAddOn::register( 'GFTrello' );
-		
+
 	}
 
 }
 
+/**
+ * Returns an instance of the GFTrello class
+ *
+ * @see    GFTrello::get_instance()
+ *
+ * @return object GFTrello
+ */
 function gf_trello() {
 	return GFTrello::get_instance();
 }
